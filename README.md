@@ -31,8 +31,12 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 ## 1. Introduction<a name="step1">
 
-This application demonstrates the RNBD451 remote command feature. Two RNBD451 modules will be used for implementing the Remote command feature. One will be called the Master Module and the other will be Remote Module. The Master Module is connected to a host MCU device and is in control of the Remote Module. The Remote Module is host-less configured to connect to the Master module. On initialization the master module will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once the user Button on Host MCU is pressed the LED connected to the remote module will be toggled. 
+This application demonstrates the RNBD451 remote command feature. This feature allows the control of an RNBD451 module without the use of a host microcontroller remotely from either another RNBD451 module or a mobile application. The remote command feature works by using a special BLE GATT service that emulates a wireless serial connection called transparent UART mode. This combined with a unique command set allows remote functionality of the module. Two RNBD451 modules will be used for implementing the Remote command feature. One will be called the Master Module and the other will be Remote Module. The Master Module is connected to a host MCU device and is in control of the Remote Module. The Remote Module is host-less configured to connect to the Master module. 
+
 ![](Docs/Setup.PNG)
+
+This application uses SAMD21 Curiosity Nano board as the host for the Master module. On initialization the master module will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once the user Button on Host MCU is pressed the LED connected to the remote module will be toggled. 
+
 
 ## 2. Bill of materials<a name="step2">
 
@@ -62,10 +66,13 @@ This application demonstrates the RNBD451 remote command feature. Two RNBD451 mo
 
 - [Microchip Bluetooth Data (MBD app)](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en&gl=US)
 
+- Any Android terminal application like [Serial USB Terminal](https://play.google.com/store/apps/details?id=de.kai_morich.serial_usb_terminal)
+
 
 ## 4. Hardware Setup<a name="step4">
 
 - Connect the SAMD21 Curiosity Nano board to the Curiosity nano base board. In the Mikro bus click 1 Socket connect the RNBD451 Add on board. Make sure the Power select jumper is placed for Mikro bus.
+- In the RNBD451 Add on Board, the gpio pins are not brought out. For this application, the GPIO pin PA0 in the Remote module is connected to an NC pin on the Mikro Bus header. 
 
 ## 5. Harmony MCC Configuration<a name="step5">
 
