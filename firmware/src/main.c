@@ -28,7 +28,7 @@
 #include "definitions.h"                // SYS function prototypes
 #include "string.h"
 #include "rnbd/rnbd.h"
-
+#include "interrupts.h"
 #include "config/default/rnbd/rnbd_interface.h"
 
 // *****************************************************************************
@@ -37,7 +37,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define DevName "Master1234"
+#define DevName "15487"
 #define ServiceUUID 0xC0
 #define MAC_ID "9C956E406D95"
 uint8_t service_uuid=0xC0;
@@ -89,15 +89,18 @@ void RNBD_rmt(void)
 {
     if(rnbd_Data.gpio_state==STATE_ON)
     {
-       rnbd_stat=true;
-       rnbd_Data.state= RNBD_TOGGLE_LOW;
-       rnbd_Data.gpio_state=STATE_NIL;
+        rnbd_stat=true;
+        rnbd_Data.state= RNBD_TOGGLE_LOW;
+        rnbd_Data.gpio_state=STATE_NIL;
     }
     if(rnbd_Data.gpio_state==STATE_OFF)
     {
-       rnbd_stat=false;
-       rnbd_Data.state= RNBD_WAIT;
-       rnbd_Data.gpio_state=STATE_NIL;
+        rnbd_stat=false;
+        bitmaap.ioStateBitMap.p2_2_state=0;
+        RNBD.DelayMs(100);
+        RNBD_SetOutputs(bitmaap);
+        rnbd_Data.state= RNBD_WAIT;
+        rnbd_Data.gpio_state=STATE_NIL;
     }
     switch(rnbd_Data.state)
     {
@@ -215,9 +218,12 @@ void RNBD_rmt(void)
             if(rnbd_stat)
             {
                 rnbd_stat=false;
-                rnbd_init=true;
                 rnbd_stat=RNBD_EnterRmtMode();
-                printf("Entered RMT mode\r\n");
+                if(rnbd_stat)
+                {
+                    rnbd_init=true;
+                    printf("Entered RMT mode\r\n");
+                }
                 bitmaap.ioBitMap.p2_2=1;
                 rnbd_Data.state=RNBD_WAIT;
             }  
@@ -261,11 +267,11 @@ void RNBD_rmt(void)
 }
 }
 bool cnt=true;
-void user_switch_callback(uintptr_t context)
+void motion_sensor_callback(uintptr_t context)
 {
     if(rnbd_init)
     {
-    printf("Count:%d\r\n",cnt);
+    printf("Motion Detected\r\nCount:%d\r\n",cnt);
     if(cnt)
     {
         cnt=false;
@@ -279,12 +285,13 @@ void user_switch_callback(uintptr_t context)
     }
 }
 
+
 int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
     printf("Initializing\r\n");
-    EIC_CallbackRegister(EIC_PIN_11,user_switch_callback,0);
+    EIC_CallbackRegister(EIC_PIN_7,motion_sensor_callback,0);
     init=RNBD_Init();
     rnbd_Data.state=RNBD_INIT;
     rnbd_Data.gpio_state=STATE_NIL;

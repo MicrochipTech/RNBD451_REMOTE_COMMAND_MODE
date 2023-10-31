@@ -422,7 +422,7 @@ bool RNBD_Connect_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen
     }
     //Sending Command to UART
     RNBD_SendCmd(cmdMsg, cmdLen);
-    RNBD.DelayMs(1000);
+    RNBD.DelayMs(3000);
     //Wait for the response time
     while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
     {

@@ -35,7 +35,7 @@ This application demonstrates the RNBD451 remote command feature. This feature a
 
 ![](Docs/Setup.PNG)
 
-This application uses SAMD21 Curiosity Nano board as the host for the Master module. On initialization the master module will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once the user Button on Host MCU is pressed the LED connected to the remote module will be toggled. 
+This application uses SAMD21 Curiosity Nano board as the host for the Master module. On initialization the master module will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once there is Motion detected on Host MCU the LED connected to the remote module will be toggled. 
 
 
 ## 2. Bill of materials<a name="step2">
@@ -44,6 +44,7 @@ This application uses SAMD21 Curiosity Nano board as the host for the Master mod
 | :- | :- |
 | [RNBD451 Add On Board](https://www.microchip.com/en-us/development-tool/ev25f14a#:~:text=The%20RNBD451%20Add%20On%20Board,%E2%84%A2%20Add%20On%20Bus%20Standard.) | 2 |
 | [CURIOSITY NANO BASE FOR CLICK BOARDS](https://www.microchip.com/en-us/development-tool/ac164162) | 1 |
+| [MOTION 4 Click Board](https://www.mikroe.com/motion-4-click) | 1 |
 | [SAM D21 CURIOSITY NANO EVALUATION KIT](https://www.microchip.com/en-us/development-tool/dm320119) | 1 |
 | [RGB LED](https://robu.in/product/smd-3-color-led-module/?gclid=CjwKCAjwnOipBhBQEiwACyGLug8P2eCIRrBCrqG8vFfO2SSnP1c16q9UcsoS562nDKz1k9rgzWT0sBoCbZsQAvD_BwE) | 1 |
 
@@ -100,6 +101,10 @@ This application uses SAMD21 Curiosity Nano board as the host for the Master mod
 - From Device resources, go to  Library->Harmony->Peripherals->SERCOM and selct SERCOM0. Right click on the "⬦" on UART and select STDIO. The configuration is depicted as follows.
 
 ![](Docs/SERCOM0.PNG)
+
+- From Device resources, go to  Library->Harmony->Peripherals->EIC and selct EIC. The configuration is depicted as follows.
+
+![](Docs/EIC.PNG)
 
 - From project graph, go to Plugins->PIN configuration and configure as follows.
 
@@ -205,6 +210,6 @@ Follow the steps provided in the link to [Build and program the application](htt
 
 - Once the Remote module is configured, Connect the SAMD21 Curiosity Nano Master setup.
 - Enter "D" command on the remote module to get the MAC ID of the Remote command.
-- Enter this Mac ID in "main.c" in line42 and program the SAMD21 Curiosity Nano Master setup. After it initialises and enters into RMT mode(Remote command Mode) the user can press the user button and toggle the LED connected to the Remote module.
+- Enter this Mac ID in "main.c" in line42 and program the SAMD21 Curiosity Nano Master setup. After it initialises and enters into RMT mode(Remote command Mode) and a motion is detected the LED connected to the Remote module is  toggled.
 
 ![](Docs/RNBD_Demo.gif)
