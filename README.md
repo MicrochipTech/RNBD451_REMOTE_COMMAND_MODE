@@ -121,7 +121,7 @@ This application uses SAMD21 Curiosity Nano board as the host for the Central De
 - Copy the "rnbd" folder, and "main.c" which can be found by navigating to the following path: "...\firmware\src"
 - Paste the folder under source files in your project folder (...\firmware\src).
 
-**Step 6** - Clean and build the project. To run the project, select "Make and program device" button.
+**Step 6** - Clean and build the project. 
 
 ## 6. Board Programming<a name="step6">
 
