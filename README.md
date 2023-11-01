@@ -108,7 +108,7 @@ This application uses SAMD21 Curiosity Nano board as the host for the Central De
 
 - From project graph, go to Plugins->PIN configuration and configure as follows.
 
-![](Docs/PIN_config.PNG)
+![](Docs/PIN.PNG)
 
 **Step 4** - [Generate](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-1/index.html?GUID-9C28F407-4879-4174-9963-2CF34161398E) the code.
  
