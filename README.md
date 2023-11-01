@@ -31,11 +31,11 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 ## 1. Introduction<a name="step1">
 
-This application demonstrates the RNBD451 remote command feature. This feature allows the control of an RNBD451 module without the use of a host microcontroller remotely from either another RNBD451 module or a mobile application. The remote command feature works by using a special BLE GATT service that emulates a wireless serial connection called transparent UART mode. This combined with a unique command set allows remote functionality of the module. Two RNBD451 modules will be used for implementing the Remote command feature. One will be called the Master Module and the other will be Remote Module. The Master Module is connected to a host MCU device and is in control of the Remote Module. The Remote Module is host-less configured to connect to the Master module. 
+This application demonstrates the RNBD451 remote command feature. This feature allows the control of an RNBD451 module without the use of a host microcontroller remotely from either another RNBD451 module or a mobile application. The remote command feature works by using a special BLE GATT service that emulates a wireless serial connection called transparent UART mode. This combined with a unique command set allows remote functionality of the module. Two RNBD451 modules will be used for implementing the Remote command feature. One will be called the Central device and the other will be Remote/Host-less Module. The Central Module is connected to a host MCU device and is in control of the Remote Module. The Remote Module is host-less configured to connect to the Central module. 
 
 ![](Docs/Setup.PNG)
 
-This application uses SAMD21 Curiosity Nano board as the host for the Master module. On initialization the master module will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once there is Motion detected on Host MCU the LED connected to the remote module will be toggled. 
+This application uses SAMD21 Curiosity Nano board as the host for the Central Device. On initialization the central will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once there is Motion detected on Host MCU the LED connected to the remote module will be toggled. 
 
 
 ## 2. Bill of materials<a name="step2">
@@ -206,10 +206,10 @@ Follow the steps provided in the link to [Build and program the application](htt
 ![](Docs/Remote_setup.gif)
 
 
-### To configure the RNBD Master module
+### To configure the RNBD Central device
 
-- Once the Remote module is configured, Connect the SAMD21 Curiosity Nano Master setup.
+- Once the Remote module is configured, Connect the SAMD21 Curiosity Nano setup.
 - Enter "D" command on the remote module to get the MAC ID of the Remote command.
-- Enter this Mac ID in "main.c" in line42 and program the SAMD21 Curiosity Nano Master setup. After it initialises and enters into RMT mode(Remote command Mode) and a motion is detected the LED connected to the Remote module is  toggled.
+- Enter this Mac ID in "main.c" in line42 and program the SAMD21 Curiosity Nano setup. After it initialises and enters into RMT mode(Remote command Mode) and a motion is detected the LED connected to the Remote module is  toggled.
 
 ![](Docs/RNBD_Demo.gif)
