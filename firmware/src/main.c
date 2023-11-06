@@ -81,12 +81,15 @@ typedef struct
 
 RNBD_DATA rnbd_Data;
 bool init,rnbd_init;
-bool rnbd_stat;
+//bool rnbd_stat;
 RNBD_gpio_bitmap_t bitmaap;
 
 
 void RNBD_rmt(void)
 {
+    bool rnbd_stat;
+    bool init;
+    
     if(rnbd_Data.gpio_state==STATE_ON)
     {
         rnbd_stat=true;
@@ -106,6 +109,7 @@ void RNBD_rmt(void)
     {
         case RNBD_INIT:
         {
+            init=RNBD_Init();
             if(init)
             {
                 rnbd_stat=false;
@@ -117,10 +121,10 @@ void RNBD_rmt(void)
         break;
         case RNBD_SET_NAME:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_SetName(DevName,strlen(DevName));
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_SetName(DevName,strlen(DevName));
                 printf("Entered CMD\r\n");
                 rnbd_Data.state=RNBD_SET_PROFILE;
             }
@@ -128,10 +132,10 @@ void RNBD_rmt(void)
         break;
         case RNBD_SET_PROFILE:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_SetServiceBitmap(service_uuid);
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_SetServiceBitmap(service_uuid);
                 printf("Name set\r\n");
                 rnbd_Data.state=RNBD_SET_SECURITY;
             }
@@ -139,22 +143,22 @@ void RNBD_rmt(void)
         break;
         case RNBD_SET_SECURITY:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_SetSecurity();
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_SetSecurity();
                 printf("Profile set\r\n");
                 rnbd_Data.state=RNBD_SET_PIN;
             }
         }
         break;
         case RNBD_SET_PIN:
-        {
+        {   
+            rnbd_stat=false;
+            char pin[]="1234";
+            rnbd_stat=RNBD_SetPinCode(pin,strlen(pin));
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                char pin[]="1234";
-                rnbd_stat=RNBD_SetPinCode(pin,strlen(pin));
                 printf("Security set\r\n");
                 rnbd_Data.state=RNBD_REBOOT;
             }
@@ -162,10 +166,10 @@ void RNBD_rmt(void)
         break;
         case RNBD_REBOOT:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_RebootCmd();
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_RebootCmd();
                 printf("Pin complete\r\n");
                 rnbd_Data.state=RNBD_CMD;
             }
@@ -173,10 +177,10 @@ void RNBD_rmt(void)
         break;
         case RNBD_CMD:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_EnterCmdMode();
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_EnterCmdMode();
                 printf("Reboot complete\r\n");            
                 rnbd_Data.state=RNBD_CONNECT;
             }
@@ -184,20 +188,20 @@ void RNBD_rmt(void)
         break;
         case RNBD_CONNECT:
         {
-              if(rnbd_stat)
+            rnbd_stat=false;
+            rnbd_stat=RNBD_Connect(MAC_ID,strlen(MAC_ID));
+            if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_Connect(MAC_ID,strlen(MAC_ID));
                 rnbd_Data.state=RNBD_CMD2;
             }  
         }
         break;
         case RNBD_CMD2:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_EnterCmdMode();
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_EnterCmdMode();
                 printf("Connecting\r\n");
                 rnbd_Data.state=RNBD_ISSUE_BONDING;
             }
@@ -205,28 +209,25 @@ void RNBD_rmt(void)
         break;
         case RNBD_ISSUE_BONDING:
         {
-              if(rnbd_stat)
+            rnbd_stat=false;
+            rnbd_stat=RNBD_Bonding();
+            if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_Bonding();
                 rnbd_Data.state=RNBD_REMOTE_CMD_MODE;
             }  
         }
         break;
         case RNBD_REMOTE_CMD_MODE:
         {
+            rnbd_stat=false;
+            rnbd_stat=RNBD_EnterRmtMode();
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                rnbd_stat=RNBD_EnterRmtMode();
-                if(rnbd_stat)
-                {
-                    rnbd_init=true;
-                    printf("Entered RMT mode\r\n");
-                }
-                bitmaap.ioBitMap.p2_2=1;
-                rnbd_Data.state=RNBD_WAIT;
-            }  
+                rnbd_init=true;
+                printf("Entered RMT mode\r\n");
+            }
+            bitmaap.ioBitMap.p2_2=1;
+            rnbd_Data.state=RNBD_WAIT;
         }
         break;
         case RNBD_WAIT:
@@ -239,12 +240,12 @@ void RNBD_rmt(void)
         break;
         case RNBD_TOGGLE_HIGH:
         {
+            rnbd_stat=false;
+            bitmaap.ioStateBitMap.p2_2_state=1;
+            RNBD.DelayMs(100);
+            rnbd_stat=RNBD_SetOutputs(bitmaap);
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                bitmaap.ioStateBitMap.p2_2_state=1;
-                RNBD.DelayMs(100);
-                rnbd_stat=RNBD_SetOutputs(bitmaap);
                 printf("Set gpio pin high\r\n");
                 rnbd_Data.state=RNBD_TOGGLE_LOW;
             }
@@ -252,12 +253,12 @@ void RNBD_rmt(void)
         break;
         case RNBD_TOGGLE_LOW:
         {
+            rnbd_stat=false;
+            bitmaap.ioStateBitMap.p2_2_state=0;
+            RNBD.DelayMs(100);
+            rnbd_stat=RNBD_SetOutputs(bitmaap);
             if(rnbd_stat)
             {
-                rnbd_stat=false;
-                bitmaap.ioStateBitMap.p2_2_state=0;
-                RNBD.DelayMs(100);
-                rnbd_stat=RNBD_SetOutputs(bitmaap);
                 printf("Set gpio pin low\r\n");
                 rnbd_Data.state=RNBD_TOGGLE_HIGH;
             }
@@ -292,9 +293,9 @@ int main ( void )
     SYS_Initialize ( NULL );
     printf("Initializing\r\n");
     EIC_CallbackRegister(EIC_PIN_7,motion_sensor_callback,0);
-    init=RNBD_Init();
     rnbd_Data.state=RNBD_INIT;
     rnbd_Data.gpio_state=STATE_NIL;
+    
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
