@@ -3,7 +3,7 @@
     "category": "com.microchip.ide.project",
     "content": {
         "metaDataVersion": "1.3.0",
-        "name": "com.microchip.mplabx.project.PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS",
+        "name": "com.microchip.mplabx.project.RNBD451_REMOTE_COMMAND_MODE",
         "version": "1.0.0",
         "displayName": "RNBD451 REMOTE COMMAND MODE",
         "projectName": "RNBD451_REMOTE_COMMAND_MODE",
