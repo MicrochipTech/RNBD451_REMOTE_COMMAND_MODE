@@ -1,0 +1,58 @@
+{
+    "metaDataVersion": "1.0.0",
+    "category": "com.microchip.ide.project",
+    "content": {
+        "metaDataVersion": "1.0.0",
+        "name": "com.microchip.mplabx.project.PIC32CXBZ2_WBZ45x_BLE_UART_MODBUS",
+        "version": "1.0.0",
+        "displayName": "RNBD451 REMOTE COMMAND MODE",
+        "projectName": "RNBD451_REMOTE_COMMAND_MODE",
+        "shortDescription": "IoT Made Easy!-This application demonstrates the RNBD451 remote command feature. This feature allows the control of an RNBD451 module without the use of a host microcontroller remotely from either another RNBD451 module or a mobile application. This example demonstrates on how to configure RNBD451 in Host-less mode and create a wireless alarm application.",
+        "ide": {
+            "name": "MPLAB X",
+            "semverRange": ">=6.10"
+        },
+        "compiler": [
+            {
+                "name": "XC32",
+                "semverRange": "^4.10.0"
+            }
+        ],
+        "dfp": {
+            "name": "SAMD21_DFP",
+            "semverRange": "^3.6.144"
+        },
+        "configurator": {
+            "name": "MCC",
+            "semverRange": ">=5.3.7"
+        },
+        "device": {
+            "metaDataVersion": "1.0.0",
+            "category": "com.microchip.portal.contentRef",
+            "content": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.device",
+                "name": "RNBD451",
+                "versionRange": "*"
+            }
+        },
+        "author": "Roopika M M",
+        "peripherals": [
+            "SERCOM"
+        ],
+        "keywords": [
+             "IoT","BLE","MPLAB X","XC32","SERCOM","MCC","Wireless","Development Tool","Bluetooth","RS485","RNBD451", "Bluetooth","Wireless", "Wireless Communication", "Communication"
+        ],
+        "additionalData": {
+            "longDescription": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.portal.fileRef",
+                "content": {
+                    "metaDataVersion": "1.0.0",
+                    "fileName": "./README.md",
+                    "mimeType": "text/markdown"
+                }
+            }
+        }
+    }
+}

@@ -35,7 +35,7 @@ This application demonstrates the RNBD451 remote command feature. This feature a
 
 ![](Docs/Setup.PNG)
 
-This application uses SAMD21 Curiosity Nano board as the host for the controller Device. On initialization the controller will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once there is Motion detected on Host MCU the LED connected to the remote module will be toggled. 
+This example demonstrates on how to configure RNBD451 in Host-less mode and create a wireless alarm application. This application uses SAMD21 Curiosity Nano board as the host for the controller Device. On initialization the controller will establish a connection with the remote module and will be in Remote Command mode of the RNBD451 Remote/host-less Module. Once there is Motion detected on Host MCU the LED connected to the remote module will be toggled. 
 
 
 ## 2. Bill of materials<a name="step2">
